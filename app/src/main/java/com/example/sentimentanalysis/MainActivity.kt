@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     private var buttonSpeak: Button? = null
     private var editText: EditText? = null
 
-    private var sadFood = arrayOf("piña colada", "mojito", "cubita", "vodka");
-    private var sadWords = setOf("morir", "triste", "desamor", "ayuda", "despresion", "deprimido", "lagrimas")
-    private var neutralFood = arrayOf("tortilla", "bolillo", "nachos con queso", "betabel");
-    private var happyFood = arrayOf("Quesadillas de Huitlacoche", "mcnuggets", "empanadas", "perico", "pan dulce for your heart");
-    private var happyWords = setOf("vivir", "feliz", "amor", "amar", "felicidad", "alegría", "abrazo")
+    private val sadFood = arrayOf("piña colada", "mojito", "cubita", "vodka");
+    private val sadWords = setOf("morir", "triste", "desamor", "ayuda", "despresion", "deprimido", "lagrimas")
+    private val neutralFood = arrayOf("tortilla", "bolillo", "nachos con queso", "betabel");
+    private val happyFood = arrayOf("Quesadillas de Huitlacoche", "mcnuggets", "empanadas", "perico", "pan dulce for your heart");
+    private val happyWords = setOf("vivir", "feliz", "amor", "amar", "felicidad", "alegría", "abrazo")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
     private fun speakOut() {
         val text = editText!!.text.toString()
-       // tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
         recommendFoodOutLoud(text)
     }
 
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     }
 
     private fun getRandomElement(input: Array<String>): String {
+        Log.d("food?", Random().nextInt(input.size).toString())
         return "I recommend you get some " + input[Random().nextInt(input.size)]
     }
 
