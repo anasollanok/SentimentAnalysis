@@ -15,6 +15,12 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     private var buttonSpeak: Button? = null
     private var editText: EditText? = null
 
+    private var sadFood = arrayOf("piña colada", "mojito", "cubita", "vodka");
+    private var sadWords = setOf("morir", "triste", "desamor", "ayuda", "despresion", "deprimido", "lagrimas")
+    private var neutralFood = arrayOf("tortilla", "bolillo", "nachos con queso", "betabel");
+    private var happyFood = arrayOf("Quesadillas de Huitlacoche", "mcnuggets", "empanadas", "perico", "pan dulce for your heart");
+    private var happyWords = setOf("vivir", "feliz", "amor", "amar", "felicidad", "alegría", "abrazo")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,7 +54,20 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
     private fun speakOut() {
         val text = editText!!.text.toString()
-        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+       // tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+        recommendFoodOutLoud(text)
+    }
+
+    private fun recommendFoodOutLoud(input: CharSequence) {
+        val parts = input.split(" ").toSet()
+        if (parts.intersect(sadWords).size != 0){
+            // Sad stuff!
+            tts!!.speak("SAAAAAAAD", TextToSpeech.QUEUE_FLUSH, null,"")
+        } else if (parts.intersect(happyWords).size != 0) {
+            tts!!.speak("HAPPPPYYY", TextToSpeech.QUEUE_FLUSH, null,"")
+        } else {
+            tts!!.speak("NEUTRAL", TextToSpeech.QUEUE_FLUSH, null,"")
+        }
     }
 
     public override fun onDestroy() {
