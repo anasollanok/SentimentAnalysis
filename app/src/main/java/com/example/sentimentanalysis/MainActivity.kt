@@ -60,14 +60,20 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
     private fun recommendFoodOutLoud(input: CharSequence) {
         val parts = input.split(" ").toSet()
-        if (parts.intersect(sadWords).size != 0){
+        val happyWordsSize = parts.intersect(happyWords).size;
+        val sadWordsSize = parts.intersect(sadWords).size;
+        if (happyWordsSize<sadWordsSize){
             // Sad stuff!
-            tts!!.speak("SAAAAAAAD", TextToSpeech.QUEUE_FLUSH, null,"")
-        } else if (parts.intersect(happyWords).size != 0) {
-            tts!!.speak("HAPPPPYYY", TextToSpeech.QUEUE_FLUSH, null,"")
+            tts!!.speak(getRandomElement(sadFood), TextToSpeech.QUEUE_FLUSH, null,"")
+        } else if (happyWordsSize>sadWordsSize) {
+            tts!!.speak(getRandomElement(happyFood), TextToSpeech.QUEUE_FLUSH, null,"")
         } else {
-            tts!!.speak("NEUTRAL", TextToSpeech.QUEUE_FLUSH, null,"")
+            tts!!.speak(getRandomElement(neutralFood), TextToSpeech.QUEUE_FLUSH, null,"")
         }
+    }
+
+    private fun getRandomElement(input: Array<String>): String {
+        return "I recommend you get some " + input[Random().nextInt(input.size)]
     }
 
     public override fun onDestroy() {
